@@ -2,21 +2,63 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 import * as myExtension from '../src/extension';
 
-suite("Extension Tests", () => {
+suite("copyGithubUR", () => {
 
-    test("buildGithubURL", () => {
+    test("correct message", () => {
+        const stdout = `
+origin  git@github.com:t-mrt/copy-github-url.git (fetch)
+origin  git@github.com:t-mrt/copy-github-url.git (push)
+7332779b314e5aed7496bbacda35514655ef6399
+`
+        let message;
 
-        assert.equal("https://github.com/t-mrt/gocha/blob/aaaa//t/test.t/#L2-L3", myExtension.buildGithubURL({
-            domain:"github.com",
-            commit: "aaaa", 
-            repository: "t-mrt/gocha",
-            filePath: "/t/test.t", 
-            line: {start: 2, end: 3}
+        myExtension.copyGithubURL({
+            execGitCommand: (rootDir: string) => { return stdout },
+            copy: (url: string) => { },
+            rootDir: "/User/test/test",
+            filePath: "test/test/test.pl",
+            line: {
+                start: 2,
+                end: 5
+            },
+            showInformationMessage: (m: string) => { message = m }
+        });
+        assert.equal("copy! https://github.com/t-mrt/copy-github-url/blob/7332779b314e5aed7496bbacda35514655ef6399/test/test/test.pl/#L2-L5", message);
+    });
+});
+
+suite("buildGithubURL", () => {
+
+    test("multi line", () => {
+
+        assert.equal("https://github.com/t-mrt/copy-github-url/blob/7332779b314e5aed7496bbacda35514655ef6399//t/test.t/#L2-L3", myExtension.buildGithubURL({
+            domain: "github.com",
+            commit: "7332779b314e5aed7496bbacda35514655ef6399",
+            repository: "t-mrt/copy-github-url",
+            filePath: "/t/test.t",
+            line: { start: 2, end: 3 }
         }));
     });
 
+    test("single line", () => {
 
-    test("parseGitRemoteStdout", () => {
+
+        assert.equal("https://github.com/t-mrt/copy-github-url/blob/7332779b314e5aed7496bbacda35514655ef6399//t/test.t/#L2", myExtension.buildGithubURL({
+            domain: "github.com",
+            commit: "7332779b314e5aed7496bbacda35514655ef6399",
+            repository: "t-mrt/copy-github-url",
+            filePath: "/t/test.t",
+            line: { start: 2, end: 2 }
+        }));
+
+    });
+
+});
+
+
+suite("parseGitRemoteStdout", () => {
+
+    test("git protocol", () => {
         assert.deepEqual({
             domain: 'github.com',
             repository: 't-mrt/gocha',
