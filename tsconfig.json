@@ -7,8 +7,8 @@
             "es6"
         ],
         "strict": true,
-        "noUnusedLocals": false,
-        "noUnusedParameters": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
         "sourceMap": true,
         "rootDir": "."
     },

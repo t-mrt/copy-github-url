@@ -1,25 +1,25 @@
-import * as vscode from 'vscode';
+import * as cp from "copy-paste";
+import * as vscode from "vscode";
 
-import * as cgu from './copy-github-URL';
-import * as cp from 'copy-paste';
+import * as cgu from "./copy-github-URL";
 
 export function activate(context: vscode.ExtensionContext) {
 
-    let disposable = vscode.commands.registerCommand('extension.copyGithubURL', () => {
+    const disposable = vscode.commands.registerCommand("extension.copyGithubURL", () => {
 
         const activeTextEditor = vscode.window.activeTextEditor;
 
         if (activeTextEditor && vscode.workspace.rootPath) {
             cgu.copyGithubURL({
-                execGitCommand: cgu.execGitCommand,
                 copy: cp.copy,
-                rootDir: vscode.workspace.rootPath,
+                execGitCommand: cgu.execGitCommand,
                 filePath: vscode.workspace.asRelativePath(activeTextEditor.document.fileName),
                 line: {
+                    end: activeTextEditor.selection.end.line,
                     start: activeTextEditor.selection.start.line,
-                    end: activeTextEditor.selection.end.line
                 },
-                showInformationMessage: vscode.window.showInformationMessage
+                rootDir: vscode.workspace.rootPath,
+                showInformationMessage: vscode.window.showInformationMessage,
             });
         }
 
@@ -29,4 +29,5 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
+    return;
 }
