@@ -16,7 +16,8 @@ None.
 
 ## Release Notes
 
-Published.
+### 0.0.2
+Support https protocol.
 
 ### 0.0.1
 
