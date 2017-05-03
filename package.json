@@ -2,7 +2,7 @@
   "name": "copy-github-url",
   "displayName": "copy-github-url",
   "description": "Copy Github URL",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "t-mrt",
   "engines": {
     "vscode": "^1.11.0"
