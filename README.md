@@ -12,7 +12,7 @@ WIP
 
 ## Known Issues
 
-It doesn"t work when origin is set with HTTPS protocol.
+None.
 
 ## Release Notes
 

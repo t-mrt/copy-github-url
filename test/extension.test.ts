@@ -72,4 +72,19 @@ origin  git@github.com:t-mrt/gocha.git (push)
         assert.equal(null, myExtension.parseStdout(''));
     });
 
+        test("https protocol", () => {
+        assert.deepEqual({
+            domain: 'github.com',
+            repository: 't-mrt/gocha',
+            sha1: "54c5e13a35ea88bd914284b99254e32afb34672d",
+        }, myExtension.parseStdout(`
+origin  https://github.com/t-mrt/gocha.git (fetch)
+origin  https://github.com/t-mrt/gocha.git (push)
+54c5e13a35ea88bd914284b99254e32afb34672d
+`));
+
+        assert.equal(null, myExtension.parseStdout(''));
+    });
+
+
 });

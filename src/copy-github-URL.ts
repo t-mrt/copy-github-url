@@ -48,13 +48,38 @@ export function buildGithubURL(args: {
 
 export function parseStdout(stdout: string) {
 
-    let m = stdout.match(/^origin(.*)@(.*):(.*)\.git\s\(fetch\)$/m);
-    let sha1 = stdout.match(/^([a-z0-9]{40})$/m);
+    let ret = {sha1: "", domain: "", repository: ""};
 
-    if (sha1 !== null && sha1[1] && m !== null && m[0] && m[1] && m[2] && m[3]) {
-        return { domain: m![2], repository: m![3], sha1: sha1[1] }
+    let sha1 = stdout.match(/^([a-z0-9]{40})$/m);
+    if (sha1 !== null && sha1[1]) {
+        ret.sha1 = sha1[1];
     } else {
         return null
+    }
+
+    let isHTTP = stdout.match(/^origin\s+https(.*)\s+\(fetch\)$/m);
+
+    if (isHTTP) {
+        let m = stdout.match(/^origin\s+https?:\/\/([^\/]+)\/(.*)\.git\s+\(fetch\)$/m);
+
+        if (m !== null && m[0] && m[1] && m[2]) {
+            ret.domain = m[1];
+            ret.repository = m[2]
+            return ret
+        } else {
+            return null
+        }
+
+    } else {
+        let m = stdout.match(/^origin(.*)@(.*):(.*)\.git\s+\(fetch\)$/m);
+
+        if (m !== null && m[0] && m[1] && m[2] && m[3]) {
+            ret.domain = m[2];
+            ret.repository = m[3]
+            return ret
+        } else {
+            return null
+        }
     }
 }
 
