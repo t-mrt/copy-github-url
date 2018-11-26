@@ -22,7 +22,7 @@ origin  git@github.com:t-mrt/copy-github-url.git (push)
             rootDir: "/User/test/test",
             showInformationMessage: (m: string) => { message = m; },
         });
-        assert.equal("copy! https://github.com/t-mrt/copy-github-url/blob/7332779b314e5aed7496bbacda35514655ef6399/test/test/test.pl/#L2-L5", message);
+        assert.equal("copy! https://github.com/t-mrt/copy-github-url/blob/7332779b314e5aed7496bbacda35514655ef6399/test/test/test.pl#L2-L5", message);
     });
 });
 
@@ -30,7 +30,7 @@ suite("buildGithubURL", () => {
 
     test("multi line", () => {
 
-        assert.equal("https://github.com/t-mrt/copy-github-url/blob/7332779b314e5aed7496bbacda35514655ef6399//t/test.t/#L2-L3", myExtension.buildGithubURL({
+        assert.equal("https://github.com/t-mrt/copy-github-url/blob/7332779b314e5aed7496bbacda35514655ef6399//t/test.t#L2-L3", myExtension.buildGithubURL({
             commit: "7332779b314e5aed7496bbacda35514655ef6399",
             domain: "github.com",
             filePath: "/t/test.t",
@@ -44,7 +44,7 @@ suite("buildGithubURL", () => {
 
     test("single line", () => {
 
-        assert.equal("https://github.com/t-mrt/copy-github-url/blob/7332779b314e5aed7496bbacda35514655ef6399//t/test.t/#L2", myExtension.buildGithubURL({
+        assert.equal("https://github.com/t-mrt/copy-github-url/blob/7332779b314e5aed7496bbacda35514655ef6399//t/test.t#L2", myExtension.buildGithubURL({
             commit: "7332779b314e5aed7496bbacda35514655ef6399",
             domain: "github.com",
             filePath: "/t/test.t",

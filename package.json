@@ -2,7 +2,7 @@
   "name": "copy-github-url",
   "displayName": "copy-github-url",
   "description": "Copy Github URL",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "t-mrt",
   "license": "MIT",
   "engines": {

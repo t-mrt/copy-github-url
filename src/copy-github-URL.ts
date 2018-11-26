@@ -40,7 +40,7 @@ export function buildGithubURL(args: {
 }) {
 
     const L = args.line.start === args.line.end ? `L${args.line.start}` : `L${args.line.start}-L${args.line.end}`;
-    const u = url.parse(`https://${args.domain}/${args.repository}/blob/${args.commit}/${args.filePath}/#${L}`);
+    const u = url.parse(`https://${args.domain}/${args.repository}/blob/${args.commit}/${args.filePath}#${L}`);
     return u.href;
 }
 
